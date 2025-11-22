@@ -7,7 +7,7 @@ A production-ready, web-based tool designed to measure your network latency (pin
 
 ## Features
 
-*   **Accurate Latency Measurement**: Uses a local Node.js proxy to perform TCP handshakes with real AWS DynamoDB endpoints (which correspond to Valorant server locations) for realistic ping values.
+*   **Accurate Latency Measurement**: Uses a local Node.js proxy to perform TCP handshakes with AWS EC2 regional endpoints that are geographically co-located with Valorant server locations for realistic ping values.
 *   **Valorant Aesthetics**: A sleek, dark-themed UI with Valorant's signature red accents, custom fonts, and micro-animations.
 *   **Region Recommendations**: Automatically identifies and recommends the best server region for you based on lowest latency and packet loss.
 *   **Detailed Metrics**: Displays Round-Trip Time (RTT), Jitter, and Packet Loss for each region.

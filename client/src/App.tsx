@@ -5,15 +5,15 @@ import { RegionCard } from './components/RegionCard';
 import { Button } from './components/ui/Button';
 import { Card } from './components/ui/Card';
 
-// Configuration for regions (pointing to local probe for demo)
-// In production, these would be real URLs like https://us-east.ping-val.com
+// Configuration for regions using AWS EC2 endpoints co-located with Valorant servers
+// These endpoints are in the same AWS regions as Valorant's actual game servers
 const REGIONS: Region[] = [
-  { id: 'na', name: 'North America', url: '/api', host: 'dynamodb.us-east-1.amazonaws.com' },
-  { id: 'eu', name: 'Europe', url: '/api', host: 'dynamodb.eu-central-1.amazonaws.com' },
-  { id: 'kr', name: 'Korea', url: '/api', host: 'dynamodb.ap-northeast-2.amazonaws.com' },
-  { id: 'br', name: 'Brazil', url: '/api', host: 'dynamodb.sa-east-1.amazonaws.com' },
-  { id: 'latam', name: 'Latin America', url: '/api', host: 'dynamodb.us-east-1.amazonaws.com' },
-  { id: 'ap', name: 'Asia Pacific', url: '/api', host: 'dynamodb.ap-southeast-1.amazonaws.com' },
+  { id: 'na', name: 'North America', url: '/api', host: 'ec2.us-east-1.amazonaws.com', port: '443' },
+  { id: 'eu', name: 'Europe', url: '/api', host: 'ec2.eu-central-1.amazonaws.com', port: '443' },
+  { id: 'kr', name: 'Korea', url: '/api', host: 'ec2.ap-northeast-2.amazonaws.com', port: '443' },
+  { id: 'br', name: 'Brazil', url: '/api', host: 'ec2.sa-east-1.amazonaws.com', port: '443' },
+  { id: 'latam', name: 'Latin America', url: '/api', host: 'ec2.us-east-1.amazonaws.com', port: '443' },
+  { id: 'ap', name: 'Asia Pacific', url: '/api', host: 'ec2.ap-southeast-1.amazonaws.com', port: '443' },
 ];
 
 function App() {

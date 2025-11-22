@@ -15,6 +15,7 @@ export interface Region {
     url: string; // Base URL for the probe
     wsUrl?: string; // WebSocket URL
     host?: string; // Real endpoint to ping via proxy
+    port?: string; // Port to use for ping (default: 443)
 }
 
 export const measureLatency = async (region: Region, samples: number = 10): Promise<PingResult> => {
@@ -68,7 +69,7 @@ export const measureLatency = async (region: Region, samples: number = 10): Prom
     } else {
         // HTTP Ping (Direct or Proxy)
         const url = region.host
-            ? `${region.url}/ping?host=${region.host}`
+            ? `${region.url}/ping?host=${region.host}${region.port ? `&port=${region.port}` : ''}`
             : `${region.url}/ping`;
 
         for (let i = 0; i < samples; i++) {
