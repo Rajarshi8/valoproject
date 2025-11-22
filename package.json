@@ -1,17 +1,23 @@
 {
   "name": "valoproject",
   "version": "1.0.0",
-  "description": "",
+  "description": "Valorant Ping Checker - Network latency testing tool",
   "main": "index.js",
   "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["valorant", "ping", "latency", "network", "checker"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "autoprefixer": "^10.4.22",
+    "concurrently": "^8.2.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17"
   }

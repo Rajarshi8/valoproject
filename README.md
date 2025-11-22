@@ -1,87 +1,208 @@
-# Valorant Ping Checker
+# Valorant Ping Checker ⚡
 
-A production-ready, web-based tool designed to measure your network latency (ping) to various Valorant server regions. This application features a premium, Valorant-inspired user interface and uses a local backend proxy to perform accurate TCP pings to real server endpoints (AWS).
+A production-ready, web-based network latency checker designed for Valorant players. Measure your ping (RTT), jitter, and packet loss to all major Valorant server regions with a sleek, game-inspired interface.
 
-![Valorant Ping Checker Screenshot](./client/public/screenshot_placeholder.png)
-*(Note: You can add a screenshot here later)*
+![License](https://img.shields.io/badge/license-ISC-blue.svg)
+![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
+![React](https://img.shields.io/badge/react-19.2-61dafb.svg)
 
-## Features
+## ✨ Features
 
-*   **Accurate Latency Measurement**: Uses a local Node.js proxy to perform TCP handshakes with AWS EC2 regional endpoints that are geographically co-located with Valorant server locations for realistic ping values.
-*   **Valorant Aesthetics**: A sleek, dark-themed UI with Valorant's signature red accents, custom fonts, and micro-animations.
-*   **Region Recommendations**: Automatically identifies and recommends the best server region for you based on lowest latency and packet loss.
-*   **Detailed Metrics**: Displays Round-Trip Time (RTT), Jitter, and Packet Loss for each region.
-*   **Shareable Results**: Copy your results to the clipboard or download a JSON report.
+### 🎯 Comprehensive Network Testing
+- **Multi-Region Support**: Test latency to 6 Valorant regions (NA, EU, KR, BR, LATAM, AP)
+- **Detailed Metrics**: RTT (min/avg/max), jitter, and packet loss percentage
+- **Real-Time Updates**: Live progress bars and animated visualizations
+- **Accurate Measurements**: TCP-based pings via proxy server to AWS endpoints co-located with Valorant servers
 
-## Tech Stack
+### 🎨 Premium User Interface
+- **Valorant-Inspired Design**: Dark theme with signature red accents and angular elements
+- **Responsive Layout**: Optimized for desktop, tablet, and mobile
+- **Interactive Visualizations**: Sparkline charts showing latency variation
+- **Status Indicators**: Color-coded badges (Excellent/Moderate/Poor)
 
-### Frontend (`/client`)
-*   **Framework**: React 19 (via Vite)
-*   **Styling**: Tailwind CSS (v3.4) with custom Valorant theme configuration
-*   **Language**: TypeScript
-*   **Linting**: ESLint
+### 📊 Smart Analysis
+- **Best Region Recommendation**: Automatically identifies optimal server
+- **Playability Status**: Clear guidance on connection quality
+  - 🟢 Excellent: <80ms
+  - 🟡 Moderate: 80-150ms
+  - 🔴 Poor: >150ms
+- **Performance Tips**: Suggestions to improve your connection
 
-### Backend (`/server`)
-*   **Runtime**: Node.js
-*   **Framework**: Express.js
-*   **Features**:
-    *   Acts as a proxy to bypass browser CORS/security restrictions for pinging external IPs.
-    *   Performs TCP connections to measure handshake time (RTT).
-    *   WebSocket support (optional/fallback).
+### 🔄 Export & Share
+- **JSON Reports**: Download detailed test results
+- **Share Text**: Copy formatted results to clipboard
+- **Historical Data**: Test metadata with timestamps
 
-## Getting Started
+### ♿ Accessibility First
+- **Keyboard Navigation**: Full Tab/Enter/Space support
+- **Screen Reader Friendly**: ARIA labels and live regions
+- **High Contrast**: WCAG AA compliant colors
+- **Focus Indicators**: Clear visual feedback
+
+### 🔒 Security & Privacy
+- **No Data Collection**: All tests run client-side
+- **Rate Limiting**: 100 requests/min per IP (HTTP), 50 msg/min (WebSocket)
+- **Privacy Notice**: Transparent about minimal logging
+- **Client-Side Processing**: Results stay on your device
+
+## 🚀 Quick Start
 
 ### Prerequisites
-*   Node.js (v18 or higher recommended)
-*   npm (Node Package Manager)
+- Node.js 18+ ([Download](https://nodejs.org/))
+- npm (comes with Node.js)
 
 ### Installation
 
-1.  **Clone the repository** (if applicable) or navigate to the project root.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd valoproject
+   ```
 
-2.  **Install Backend Dependencies**:
-    ```bash
-    cd server
-    npm install
-    ```
+2. **Install dependencies**
+   ```bash
+   # Backend
+   cd server
+   npm install
 
-3.  **Install Frontend Dependencies**:
-    ```bash
-    cd ../client
-    npm install
-    ```
+   # Frontend
+   cd ../client
+   npm install
+   ```
 
-### Running the Project
+### Running Locally
 
-You need to run both the backend server and the frontend client simultaneously.
+**Terminal 1 - Backend Server:**
+```bash
+cd server
+node index.js
+```
+Server runs on `http://localhost:3001`
 
-1.  **Start the Backend Server**:
-    Open a terminal and run:
-    ```bash
-    cd server
-    node index.js
-    ```
-    The server will start on `http://localhost:3001`.
+**Terminal 2 - Frontend Client:**
+```bash
+cd client
+npm run dev
+```
+Client runs on `http://localhost:5173`
 
-2.  **Start the Frontend Client**:
-    Open a *new* terminal window/tab and run:
-    ```bash
-    cd client
-    npm run dev
-    ```
-    The client will start on `http://localhost:5173`.
+**Open your browser** and navigate to [http://localhost:5173](http://localhost:5173)
 
-3.  **Open in Browser**:
-    Visit [http://localhost:5173](http://localhost:5173) to use the application.
+## 🏗️ Architecture
 
-## How It Works
+### How It Works
 
-Browsers cannot directly "ping" arbitrary IP addresses due to security sandboxing. To solve this:
-1.  The **Frontend** sends a request to the **Local Backend** (`/ping?host=...`).
-2.  The **Backend** attempts to establish a TCP connection to the specified target host (e.g., `dynamodb.us-east-1.amazonaws.com` for NA).
-3.  The time taken to establish the connection (TCP Handshake) is measured and returned as the "Ping".
-4.  This provides a much more accurate representation of network latency than simple HTTP requests or WebSocket estimates.
+Browsers cannot directly ping IP addresses due to security restrictions. This app solves that with a proxy architecture:
 
-## License
+```
+User Browser → Local Backend Proxy → Target AWS Endpoints → Response
+                     ↓
+                Measure RTT
+```
+
+1. **Frontend** sends request to local backend (`/api/ping?host=...`)
+2. **Backend** establishes TCP connection to target (e.g., `ec2.us-east-1.amazonaws.com`)
+3. **TCP Handshake Time** is measured and returned as RTT
+4. **Frontend** runs 10 probes per region and calculates statistics
+
+### Tech Stack
+
+#### Frontend (`/client`)
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 7
+- **Styling**: Tailwind CSS 3.4
+- **State**: React Hooks
+- **HTTP Client**: Fetch API
+
+#### Backend (`/server`)
+- **Runtime**: Node.js 18
+- **Framework**: Express 5
+- **WebSocket**: ws library
+- **CORS**: cors middleware
+
+## 🌍 Deployment
+
+### Option 1: Vercel (Serverless - Recommended)
+
+Deploy to Vercel's Edge Network for global low-latency pings:
+
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
+### Option 2: Docker
+
+Run both frontend and backend with Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+Visit `http://localhost:5173`
+
+### Option 3: Multi-Region Probes
+
+For production accuracy, deploy probe servers across multiple regions. See [MULTI_REGION_DEPLOYMENT.md](MULTI_REGION_DEPLOYMENT.md) for complete guide.
+
+**Estimated cost:** $3-6/month per region
+
+## 📝 API Documentation
+
+### HTTP Endpoint
+
+**GET /ping**
+```
+Query Params:
+  - host (optional): Target hostname
+  - port (optional): Target port (default: 443)
+
+Response:
+  - Without host: {"server_time": 1700000000}
+  - With host: {"rtt": 45, "t_server": 1700000000, "host": "...", "port": 443}
+```
+
+### WebSocket Endpoint
+
+**ws://localhost:3001**
+```
+Send: {"type":"ping","id":1,"t0":1700000000}
+Receive: {"type":"ping","id":1,"t0":1700000000,"t_server":1700000025,"t_server_recv":1700000024}
+```
+
+## 🐛 Troubleshooting
+
+### Backend Not Starting
+```bash
+# Check port availability
+netstat -ano | findstr :3001
+
+# Kill process if needed
+taskkill /PID <pid> /F
+```
+
+### CORS Errors
+- Ensure backend is running on port 3001
+- Check Vite proxy config in `vite.config.ts`
+- Verify CORS headers in server response
+
+### High Latency
+- Test your internet connection
+- Close bandwidth-heavy apps
+- Try different region
+- Check firewall/antivirus
+
+### Rate Limit Errors
+- Wait 1 minute
+- Reduce probe count in code
+- Increase `RATE_LIMIT_MAX` in `server/index.js`
+
+## ⚠️ Disclaimer
+
+This project is **not affiliated with Riot Games**. Valorant is a trademark of Riot Games, Inc. This tool is an independent network testing utility inspired by Valorant's aesthetic.
+
+## 📄 License
 
 ISC
