@@ -38,9 +38,9 @@ function App() {
       setLoading(prev => ({ ...prev, [region.id]: true }));
       try {
         const result = await measureLatency(region, 10, (current, total, latestRtt) => {
-          setProgress(prev => ({ 
-            ...prev, 
-            [region.id]: { current, total } 
+          setProgress(prev => ({
+            ...prev,
+            [region.id]: { current, total }
           }));
         });
         setResults(prev => ({ ...prev, [region.id]: result }));
@@ -66,9 +66,9 @@ function App() {
     setLoading(prev => ({ ...prev, [regionId]: true }));
     try {
       const result = await measureLatency(region, 10, (current, total) => {
-        setProgress(prev => ({ 
-          ...prev, 
-          [regionId]: { current, total } 
+        setProgress(prev => ({
+          ...prev,
+          [regionId]: { current, total }
         }));
       });
       setResults(prev => ({ ...prev, [regionId]: result }));
@@ -105,7 +105,7 @@ function App() {
         rtt: bestRegion[1].rtt
       } : null
     };
-    
+
     const data = JSON.stringify(report, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -118,17 +118,17 @@ function App() {
 
   const generateShareText = () => {
     if (!bestRegion) return '';
-    
+
     const regionName = REGIONS.find(r => r.id === bestRegion[0])?.name;
     const sortedResults = Object.entries(results)
       .filter(([_, r]) => r.packetLoss < 100)
       .sort((a, b) => a[1].rtt - b[1].rtt);
-    
+
     const summary = sortedResults
       .slice(0, 3)
       .map(([id, result]) => `${REGIONS.find(r => r.id === id)?.name}: ${result.rtt}ms`)
       .join(', ');
-    
+
     return `My Valorant Ping Check\n✅ Best: ${regionName} (${bestRegion[1].rtt}ms)\n📊 ${summary}`;
   };
 
@@ -165,15 +165,15 @@ function App() {
           </h1>
         </div>
         <nav className="text-sm text-gray-500 uppercase tracking-widest space-x-6">
-          <button 
-            onClick={() => setShowTips(!showTips)} 
+          <button
+            onClick={() => setShowTips(!showTips)}
             className="hover:text-valorant-red transition-colors focus:outline-none focus:text-valorant-red"
             aria-expanded={showTips}
           >
             Tips
           </button>
-          <a 
-            href="#privacy" 
+          <a
+            href="#privacy"
             className="hover:text-valorant-red transition-colors focus:outline-none focus:text-valorant-red"
           >
             Privacy
@@ -203,7 +203,7 @@ function App() {
             Check Your Latency
           </h2>
           <p className="text-gray-500 mb-8 max-w-2xl mx-auto">
-            Measure your network latency to Valorant server regions. 
+            Measure your network latency to Valorant server regions.
             Get detailed metrics including RTT, jitter, and packet loss.
           </p>
           <div className="flex justify-center">
@@ -259,28 +259,28 @@ function App() {
                 </div>
               </div>
               <p className="mt-4 text-gray-400 text-sm max-w-lg">
-                {bestRegion[1].rtt < 80 
+                {bestRegion[1].rtt < 80
                   ? 'Your connection to this region is optimal. You should experience minimal lag and responsive gameplay.'
                   : bestRegion[1].rtt < 150
-                  ? 'Your connection is acceptable. You may experience occasional lag during intense moments.'
-                  : 'Your connection may result in noticeable lag. Consider the tips above to improve your ping.'}
+                    ? 'Your connection is acceptable. You may experience occasional lag during intense moments.'
+                    : 'Your connection may result in noticeable lag. Consider the tips above to improve your ping.'}
               </p>
             </Card>
 
             <Card>
               <h3 className="text-xl font-bold uppercase mb-4 text-gray-400">Actions</h3>
               <div className="space-y-3">
-                <Button 
-                  variant="secondary" 
-                  className="w-full" 
+                <Button
+                  variant="secondary"
+                  className="w-full"
                   onClick={downloadReport}
                   aria-label="Download detailed JSON report"
                 >
                   Download JSON Report
                 </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
+                <Button
+                  variant="outline"
+                  className="w-full"
                   onClick={copyShareText}
                   aria-label="Copy results to clipboard"
                 >
@@ -295,9 +295,9 @@ function App() {
       <footer className="max-w-6xl mx-auto mt-20 border-t border-gray-800 pt-8 space-y-4">
         <div id="privacy" className="text-gray-600 text-xs">
           <h4 className="uppercase tracking-widest mb-2 font-bold">Privacy Notice</h4>
-          <p>This tool performs network tests directly from your browser. 
-          No personal data is collected or stored. All tests are performed client-side and through a local proxy server.
-          Your IP address may be temporarily logged by the server for rate limiting purposes only.</p>
+          <p>This tool performs network tests directly from your browser.
+            No personal data is collected or stored. All tests are performed client-side and through a local proxy server.
+            Your IP address may be temporarily logged by the server for rate limiting purposes only.</p>
         </div>
         <div className="text-center text-gray-600 text-xs uppercase tracking-widest">
           <p>Not affiliated with Riot Games. Valorant is a trademark of Riot Games, Inc.</p>

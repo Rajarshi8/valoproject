@@ -19,7 +19,7 @@ const RATE_LIMIT_MAX = 100; // 100 requests per minute per IP
 const rateLimiter = (req, res, next) => {
   const ip = req.ip || req.connection.remoteAddress;
   const now = Date.now();
-  
+
   if (!requestCounts.has(ip)) {
     requestCounts.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
   } else {
@@ -85,15 +85,15 @@ const WS_RATE_LIMIT = 50; // messages per connection per minute
 wss.on('connection', (ws, req) => {
   const ip = req.socket.remoteAddress;
   const connectionId = `${ip}-${Date.now()}`;
-  
+
   wsConnections.set(connectionId, { count: 0, resetTime: Date.now() + RATE_LIMIT_WINDOW });
-  
+
   ws.on('message', (message) => {
     try {
       // Rate limit check
       const now = Date.now();
       const record = wsConnections.get(connectionId);
-      
+
       if (record) {
         if (now > record.resetTime) {
           record.count = 1;
@@ -106,10 +106,10 @@ wss.on('connection', (ws, req) => {
           }
         }
       }
-      
+
       const data = JSON.parse(message);
       const t_server_recv = Date.now();
-      
+
       // Echo back with server timestamps
       ws.send(JSON.stringify({
         ...data,
@@ -121,7 +121,7 @@ wss.on('connection', (ws, req) => {
       ws.send(JSON.stringify({ error: 'Invalid message format' }));
     }
   });
-  
+
   ws.on('close', () => {
     wsConnections.delete(connectionId);
   });

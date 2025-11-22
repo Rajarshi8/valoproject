@@ -8,7 +8,12 @@
     "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["valorant", "ping", "latency", "probe"],
+  "keywords": [
+    "valorant",
+    "ping",
+    "latency",
+    "probe"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

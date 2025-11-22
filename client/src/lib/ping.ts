@@ -22,7 +22,7 @@ export interface Region {
 export type ProgressCallback = (currentSample: number, totalSamples: number, latestRtt?: number) => void;
 
 export const measureLatency = async (
-    region: Region, 
+    region: Region,
     samples: number = 10,
     onProgress?: ProgressCallback
 ): Promise<PingResult> => {
@@ -43,10 +43,10 @@ export const measureLatency = async (
             for (let i = 0; i < samples; i++) {
                 try {
                     const start = performance.now();
-                    ws.send(JSON.stringify({ 
+                    ws.send(JSON.stringify({
                         type: 'ping',
-                        id: i, 
-                        t0: start 
+                        id: i,
+                        t0: start
                     }));
 
                     await new Promise<void>((resolve, reject) => {
@@ -55,11 +55,11 @@ export const measureLatency = async (
                             const rtt = end - start;
                             results.push(rtt);
                             ws.removeEventListener('message', handler);
-                            
+
                             if (onProgress) {
                                 onProgress(i + 1, samples, rtt);
                             }
-                            
+
                             resolve();
                         };
                         ws.addEventListener('message', handler);
@@ -91,11 +91,11 @@ export const measureLatency = async (
         for (let i = 0; i < samples; i++) {
             try {
                 const start = performance.now();
-                const res = await fetch(url, { 
+                const res = await fetch(url, {
                     cache: 'no-store',
                     signal: AbortSignal.timeout(5000)
                 });
-                
+
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
                 const data = await res.json();
@@ -104,7 +104,7 @@ export const measureLatency = async (
                 // Use server-calculated RTT if available (more accurate for proxy pings)
                 const rtt = data.rtt || (end - start);
                 results.push(rtt);
-                
+
                 if (onProgress) {
                     onProgress(i + 1, samples, rtt);
                 }

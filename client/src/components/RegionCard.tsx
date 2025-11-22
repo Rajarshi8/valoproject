@@ -11,13 +11,13 @@ interface RegionCardProps {
     progress?: { current: number; total: number };
 }
 
-export const RegionCard: React.FC<RegionCardProps> = ({ 
-    region, 
-    result, 
-    loading, 
-    error, 
+export const RegionCard: React.FC<RegionCardProps> = ({
+    region,
+    result,
+    loading,
+    error,
     onTest,
-    progress 
+    progress
 }) => {
     const getStatusColor = (rtt: number) => {
         if (rtt < 80) return 'text-green-400';
@@ -60,7 +60,7 @@ export const RegionCard: React.FC<RegionCardProps> = ({
                     <div className="text-xs text-gray-600 font-mono uppercase">{region.id}</div>
                 </div>
                 {result && !loading && (
-                    <div 
+                    <div
                         className={`text-xs font-bold px-2 py-1 bg-opacity-10 rounded ${getStatusBgColor(result.rtt).replace('bg-', 'bg-')} ${getStatusColor(result.rtt)}`}
                         role="status"
                         aria-label={`Connection status: ${getStatusText(result.rtt)}`}
@@ -84,7 +84,7 @@ export const RegionCard: React.FC<RegionCardProps> = ({
                                     Testing {progress.current}/{progress.total}
                                 </div>
                                 <div className="w-full bg-gray-800 rounded-full h-1">
-                                    <div 
+                                    <div
                                         className="bg-valorant-red h-1 rounded-full transition-all duration-300"
                                         style={{ width: `${(progress.current / progress.total) * 100}%` }}
                                         role="progressbar"

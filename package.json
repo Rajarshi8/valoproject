@@ -11,7 +11,13 @@
     "start": "cd server && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["valorant", "ping", "latency", "network", "checker"],
+  "keywords": [
+    "valorant",
+    "ping",
+    "latency",
+    "network",
+    "checker"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
