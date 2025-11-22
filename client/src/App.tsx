@@ -8,12 +8,12 @@ import { Card } from './components/ui/Card';
 // Configuration for regions (pointing to local probe for demo)
 // In production, these would be real URLs like https://us-east.ping-val.com
 const REGIONS: Region[] = [
-  { id: 'na', name: 'North America', url: 'http://localhost:3001', host: 'dynamodb.us-east-1.amazonaws.com' },
-  { id: 'eu', name: 'Europe', url: 'http://localhost:3001', host: 'dynamodb.eu-central-1.amazonaws.com' },
-  { id: 'kr', name: 'Korea', url: 'http://localhost:3001', host: 'dynamodb.ap-northeast-2.amazonaws.com' },
-  { id: 'br', name: 'Brazil', url: 'http://localhost:3001', host: 'dynamodb.sa-east-1.amazonaws.com' },
-  { id: 'latam', name: 'Latin America', url: 'http://localhost:3001', host: 'dynamodb.us-east-1.amazonaws.com' },
-  { id: 'ap', name: 'Asia Pacific', url: 'http://localhost:3001', host: 'dynamodb.ap-southeast-1.amazonaws.com' },
+  { id: 'na', name: 'North America', url: '/api', host: 'dynamodb.us-east-1.amazonaws.com' },
+  { id: 'eu', name: 'Europe', url: '/api', host: 'dynamodb.eu-central-1.amazonaws.com' },
+  { id: 'kr', name: 'Korea', url: '/api', host: 'dynamodb.ap-northeast-2.amazonaws.com' },
+  { id: 'br', name: 'Brazil', url: '/api', host: 'dynamodb.sa-east-1.amazonaws.com' },
+  { id: 'latam', name: 'Latin America', url: '/api', host: 'dynamodb.us-east-1.amazonaws.com' },
+  { id: 'ap', name: 'Asia Pacific', url: '/api', host: 'dynamodb.ap-southeast-1.amazonaws.com' },
 ];
 
 function App() {
